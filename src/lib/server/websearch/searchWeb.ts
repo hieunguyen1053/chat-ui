@@ -17,8 +17,10 @@ export async function searchWeb(query: string) {
 export async function searchWebSerper(query: string) {
 	const params = {
 		q: query,
-		hl: "en",
-		gl: "us",
+		// hl: "en",
+		// gl: "us",
+		hl: "vi",
+		gl: "vn",
 	};
 
 	const response = await fetch("https://google.serper.dev/search", {
@@ -36,7 +38,7 @@ export async function searchWebSerper(query: string) {
 	if (!response.ok) {
 		throw new Error(
 			data["message"] ??
-				`Serper API returned error code ${response.status} - ${response.statusText}`
+			`Serper API returned error code ${response.status} - ${response.statusText}`
 		);
 	}
 
@@ -48,8 +50,10 @@ export async function searchWebSerper(query: string) {
 export async function searchWebSerpApi(query: string) {
 	const params = {
 		q: query,
-		hl: "en",
-		gl: "us",
+		// hl: "en",
+		// gl: "us",
+		hl: "vi",
+		gl: "vn",
 		google_domain: "google.com",
 		api_key: SERPAPI_KEY,
 	} satisfies GoogleParameters;

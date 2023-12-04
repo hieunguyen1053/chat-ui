@@ -11,7 +11,7 @@ export async function POST({ params, locals }) {
 
 	const conversation = await collections.conversations.findOne({
 		_id: conversationId,
-		...authCondition(locals),
+		// ...authCondition(locals),
 	});
 
 	if (!conversation) {

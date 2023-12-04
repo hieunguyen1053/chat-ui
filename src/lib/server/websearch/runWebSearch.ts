@@ -65,7 +65,7 @@ export async function runWebSearch(
 				} catch (e) {
 					// ignore errors
 				}
-				const MAX_N_CHUNKS = 100;
+				const MAX_N_CHUNKS = 128;
 				const texts = chunk(text, CHUNK_CAR_LEN).slice(0, MAX_N_CHUNKS);
 				return texts.map((t) => ({ source: result, text: t }));
 			});
@@ -79,12 +79,18 @@ export async function runWebSearch(
 		}
 
 		appendUpdate("Extracting relevant information");
-		const topKClosestParagraphs = 8;
+		const topKClosestParagraphs = 5;
 		const texts = paragraphChunks.map(({ text }) => text);
 		const indices = await findSimilarSentences(prompt, texts, {
 			topK: topKClosestParagraphs,
 		});
-		webSearch.context = indices.map((idx) => texts[idx]).join("");
+		const contexts = indices.map((idx) => texts[idx]);
+		let context = "";
+		for (let [i, ctx] of contexts.entries()) {
+			ctx = ctx.replace("\[\d+\]", "");
+			context += `[${i + 1}] ${ctx}\n\n`;
+		}
+		webSearch.context = context;
 
 		const usedSources = new Set<string>();
 		for (const idx of indices) {

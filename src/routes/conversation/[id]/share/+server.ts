@@ -10,7 +10,7 @@ import { nanoid } from "nanoid";
 export async function POST({ params, url, locals }) {
 	const conversation = await collections.conversations.findOne({
 		_id: new ObjectId(params.id),
-		...authCondition(locals),
+		// ...authCondition(locals),
 	});
 
 	if (!conversation) {

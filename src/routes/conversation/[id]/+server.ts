@@ -35,7 +35,7 @@ export async function POST({ request, fetch, locals, params, getClientAddress })
 	// check if the user has access to the conversation
 	const conv = await collections.conversations.findOne({
 		_id: convId,
-		...authCondition(locals),
+		// ...authCondition(locals),
 	});
 
 	if (!conv) {
@@ -307,7 +307,7 @@ export async function DELETE({ locals, params }) {
 
 	const conv = await collections.conversations.findOne({
 		_id: convId,
-		...authCondition(locals),
+		// ...authCondition(locals),
 	});
 
 	if (!conv) {
@@ -328,7 +328,7 @@ export async function PATCH({ request, locals, params }) {
 
 	const conv = await collections.conversations.findOne({
 		_id: convId,
-		...authCondition(locals),
+		// ...authCondition(locals),
 	});
 
 	if (!conv) {

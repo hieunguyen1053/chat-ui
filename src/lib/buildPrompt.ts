@@ -30,15 +30,11 @@ export async function buildPrompt({
 			...messagesWithoutLastUsrMsg,
 			{
 				from: "user",
-				content: `Please answer my question "${lastUserMsg.content}" using the supplied context below (paragraphs from various websites). For the context, today is ${currentDate}: 
-				=====================
-				${webSearch.context}
-				=====================
-				So my question is "${lastUserMsg.content}"`,
+				content: `References:\n\n${webSearch.context}Question: ${lastUserMsg.content}`,
 			},
 		];
+		preprompt = `<s>[INST] <<SYS>>\nAnswer the question based on the following references with citations. Use a mark for each helpful reference you cited, such as [1]. If there are multiple citations at one position, please use a format like [1][2][3]. If a reference is useless, do not cite it.\n\nI will provide you with some references. Based on the references, please answer my question. Pay attention that you should be objective, and you should not use your knowledge. Use a mark for each helpful reference you cited, such as [1]. If there are multiple citations at one position, please use a format like [1][2][3]. If a reference is useless, do not cite it.\n<</SYS>>\n\n`;
 	}
-
 	return (
 		model
 			.chatPromptRender({ messages, preprompt })
